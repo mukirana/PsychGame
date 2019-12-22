@@ -8,15 +8,13 @@ import javax.persistence.*;
 @Entity
 @Table(name = "stats")
 public class Stats {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
-    long id;
-
-    @OneToOne(mappedBy = "players_Id")
-    Player playerId;
-
-    @Getter @Setter
-    long score;
-
+    @Getter
+    @Setter
+    private long correctAnswers = 0;
+    @Getter
+    @Setter
+    private long gotPsychedCount = 0;
+    @Getter
+    @Setter
+    private long psychedOthersCount = 0;
 }

@@ -4,21 +4,15 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "contentWriter")
-public class ContentWriter extends Auditable{
+@Table(name = "content_writers")
+public class ContentWriter extends Employee{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ManyToMany
     @Getter
     @Setter
-    Long id;
-
-    @Getter @Setter
-    String EmailId;
-
-    @Getter @Setter
-    String name;
+    List<Question> editedQuestions;
 
 }

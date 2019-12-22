@@ -1,20 +1,26 @@
 package app.psych.game.controller;
 
-import app.psych.game.model.Questions;
+import app.psych.game.model.Question;
 import app.psych.game.repository.QuestionRepository;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/questions")
-public class QuestionController {
+import java.util.List;
 
+@RestController
+@RequestMapping("/dev")
+public class QuestionController {
     @Autowired
     private QuestionRepository questionRepository;
 
-    @GetMapping("/{id}")
-    public Questions getQuestionById(@PathVariable(value ="id") Long id) throws Exception{
-        return questionRepository.findById(id).orElseThrow(()-> new Exception("Something went wrong"));
+    @GetMapping("/questions")
+    public List<Question> getAllQuestions() {
+        return questionRepository.findAll();
+    }
+
+    @GetMapping("/questions/{id}")
+    public Question getAllQuestions(@PathVariable(value = "id") Long id) throws Exception {
+        return questionRepository.findById(id).orElseThrow(Exception::new);
     }
 }

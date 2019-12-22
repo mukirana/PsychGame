@@ -2,33 +2,36 @@ package app.psych.game.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Entity
 @Table(name = "players")
 public class Player extends Auditable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
-
-    private Long id;
-
-    public String getName() {
-        return name;
-    }
-
     @Getter
     @Setter
     @NotBlank
     private String name;
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "Stats_Id",referencedColumnName = "id")
-    private Stats stat;
+    @Getter
+    @Setter
+    @URL
+    private String psychFaceURL;
+    @Getter
+    @Setter
+    @URL
+    private String picURL;
+
+    @OneToOne
+    @Getter
+    @Setter
+    private Stats stats;
+
+    @ManyToMany(mappedBy = "players")
+    @Getter
+    @Setter
+    private List<Game> games;
 }
