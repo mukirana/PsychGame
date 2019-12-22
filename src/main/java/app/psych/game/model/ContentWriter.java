@@ -18,5 +18,7 @@ public class ContentWriter extends Auditable{
     @Getter @Setter
     String EmailId;
 
+    @Getter @Setter
+    String name;
 
 }
