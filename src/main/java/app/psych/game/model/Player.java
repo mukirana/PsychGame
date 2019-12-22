@@ -13,6 +13,7 @@ public class Player extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
+
     private Long id;
 
     public String getName() {
@@ -23,8 +24,11 @@ public class Player extends Auditable {
     @Setter
     @NotBlank
     private String name;
-
     public void setName(String name) {
         this.name = name;
     }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Stats_Id",referencedColumnName = "id")
+    private Stats stat;
 }
