@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,7 +30,6 @@ public class PopulateDB {
     public void addQuestionsFromFiles() throws IOException {
         questionRepository.deleteAll();
         for (Map.Entry<String, GameMode> entry : Constants.QA_FILES.entrySet()) {
-            int questionNumber = 0;
             String filename = entry.getKey();
             GameMode gameMode = entry.getValue();
             for (Pair<String, String> question_answer : Utils.readQAFile(filename)) {
@@ -37,16 +38,14 @@ public class PopulateDB {
                 q.setCorrectAnswer(question_answer.getSecond());
                 q.setGameMode(gameMode);
                 questionRepository.save(q);
-                questionNumber++;
-                if (questionNumber > Constants.MAX_QUESTIONS_TO_READ) {
-                    break;
-                }
             }
         }
     }
 
     @GetMapping("/add-dummy-players")
+    @Transactional
     public void addDummyPlayers() throws IOException {
+        System.out.println("this is entry");
         playerRepository.deleteAll();
         Player luffy = new Player();
         luffy.setName("Monkey D. Luffy");
@@ -55,8 +54,10 @@ public class PopulateDB {
         Player robin = new Player();
         robin.setName("Nico Robin");
         robin.setPicURL("https://i.imgur.com/kB7StJm.png");
-        robin.setPicURL("https://i.imgur.com/tnJTeaG.png");
+        robin.setPsychFaceURL("https://i.imgur.com/tnJTeaG.png");
+        System.out.println("heelo");
         playerRepository.save(luffy);
         playerRepository.save(robin);
+
     }
 }

@@ -3,6 +3,7 @@ package app.psych.game;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class Utils {
 
         String question, answer;
         List<Pair<String, String>> question_answers = new ArrayList<>();
+        int questionNumber = 0;
         try (BufferedReader br = new BufferedReader(new FileReader("qa_facts.txt"))) {
             do {
                 question = br.readLine();
@@ -21,7 +23,10 @@ public class Utils {
                     continue;
                 }
                 question_answers.add(new Pair<>(question, answer));
-            } while (question != null & answer != null);
+                questionNumber++;
+              //  System.out.println("question no."+questionNumber);
+
+            } while (question != null && answer != null && questionNumber<Constants.MAX_QUESTIONS_TO_READ);
         } catch (IOException ignored) {
         }
         return question_answers;

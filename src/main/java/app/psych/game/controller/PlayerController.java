@@ -3,11 +3,14 @@ package app.psych.game.controller;
 import app.psych.game.model.Player;
 import app.psych.game.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 @RequestMapping("/api")
@@ -20,8 +23,8 @@ public class PlayerController {
         return playerRepository.findAll();
     }
 
-    @PostMapping("/players")
-    public Player createPlayer(@Valid @RequestBody Player player) {
+    @PostMapping(value= "/players", consumes = "application/json", produces = "application/json")
+    public Player createPlayer(@RequestBody Player player) {
         return playerRepository.save(player);
     }
 

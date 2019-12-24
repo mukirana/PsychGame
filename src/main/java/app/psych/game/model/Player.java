@@ -1,5 +1,6 @@
 package app.psych.game.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
@@ -10,28 +11,20 @@ import java.util.List;
 
 @Entity
 @Table(name = "players")
+@Getter
+@Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Player extends Auditable {
-    @Getter
-    @Setter
-    @NotBlank
+
     private String name;
 
-    @Getter
-    @Setter
-    @URL
     private String psychFaceURL;
-    @Getter
-    @Setter
-    @URL
+
     private String picURL;
 
     @OneToOne
-    @Getter
-    @Setter
     private Stats stats;
 
     @ManyToMany(mappedBy = "players")
-    @Getter
-    @Setter
     private List<Game> games;
 }
